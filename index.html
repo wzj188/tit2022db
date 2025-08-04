@@ -1,109 +1,287 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>个人社保计算软件-Web版</title>
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英才汇硕幸运之星</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义样式 -->
     <script>
-        function calc() {
-            //1. 获取用户输入的工资
-            sal = document.getElementById("salary").value;
-            console.log(sal);// "8000"
-            salnum = parseInt(sal);// 8000
-            //2. 计算
-            ylgr = salnum * 0.08;
-            ylgs = salnum * 0.2;
-            ybgr = salnum * 0.02;
-            ybgs = salnum * 0.06;
-            //3. 把计算结果放到单元格里
-            document.getElementById("ylgr").innerText=ylgr;
-            document.getElementById("ylgs").innerText=ylgs;
-            document.getElementById("ybgr").innerText=ybgr;
-            document.getElementById("ybgs").innerText=ybgs;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        dark: '#1E293B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
         }
     </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .animate-spin-slow {
+                animation: spin 3s linear infinite;
+            }
+            .animate-bounce-slow {
+                animation: bounce 2s infinite;
+            }
+            .progress-bar {
+                height: 4px;
+                background-color: rgba(59, 130, 246, 0.2);
+                border-radius: 2px;
+                overflow: hidden;
+                margin-top: 1rem;
+            }
+            .progress-fill {
+                height: 100%;
+                background-color: #3B82F6;
+                width: 100%;
+                transition: width 0.1s linear;
+            }
+        }
+    </style>
 </head>
-<body>
-<div class="container">
-    <h2>个人社保计算软件-雅婕</h2>
-    <table class="table table-bordered text-center">
-        <tr>
-            <td>工资</td>
-            <td colspan="3">
-                <input class="form-control" type="text" id="salary" placeholder="请输入您的工资">
-            </td>
-            <td>
-                <button onclick="calc()" class="btn btn-danger btn-block">计算</button>
-            </td>
-        </tr>
-        <tr class="bg-primary">
-            <td>险种</td>
-            <td>个人%</td>
-            <td>个人</td>
-            <td>公司%</td>
-            <td>公司</td>
-        </tr>
-        <tr>
-            <td>养老</td>
-            <td>8%</td>
-            <td id="ylgr"></td>
-            <td>20%</td>
-            <td id="ylgs"></td>
-        </tr>
-        <tr>
-            <td>医疗</td>
-            <td>2%</td>
-            <td id="ybgr"></td>
-            <td>6%</td>
-            <td id="ybgs"></td>
-        </tr>
-        <tr>
-            <td>失业</td>
-            <td>0.5%</td>
-            <td></td>
-            <td>1.5%</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>工伤</td>
-            <td></td>
-            <td></td>
-            <td>0.5%</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>生育</td>
-            <td></td>
-            <td></td>
-            <td>0.8%</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>公积金</td>
-            <td>12%</td>
-            <td></td>
-            <td>12%</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>合计</td>
-            <td>个人合计</td>
-            <td></td>
-            <td>公司合计</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>总额</td>
-            <td colspan="4"></td>
-        </tr>
-    </table>
-</div>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex flex-col">
+    <!-- 页面头部 -->
+    <header class="bg-white shadow-md py-6 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center">
+            <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-dark text-shadow">
+                <i class="fa fa-star text-accent animate-spin-slow mr-3"></i>
+                英才汇硕幸运之星
+                <i class="fa fa-star text-accent animate-spin-slow ml-3"></i>
+            </h1>
+            <p class="text-gray-600 mt-2 text-lg">随机点名系统</p>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col items-center justify-center">
+        <!-- 点名显示区域 -->
+        <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8 mb-10 transform transition-all duration-300 hover:shadow-2xl">
+            <div class="text-center">
+                <h2 class="text-xl font-semibold text-gray-700 mb-6">当前幸运星</h2>
+                
+                <!-- 姓名显示框 -->
+                <div id="nameDisplay" class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 min-h-[180px] flex items-center justify-center border-2 border-primary/20 transition-all duration-300">
+                    <p class="text-[clamp(2rem,8vw,4rem)] font-bold text-primary transition-all duration-300" id="studentName">
+                        准备开始
+                    </p>
+                </div>
+                
+                <!-- 倒计时进度条 -->
+                <div class="progress-bar hidden" id="progressContainer">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+                
+                <!-- 状态提示 -->
+                <p id="statusText" class="mt-4 text-gray-500 text-sm">点击开始按钮进行随机选择，5秒后自动停止</p>
+            </div>
+        </div>
+        
+        <!-- 控制按钮区域 -->
+        <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md justify-center">
+            <button id="startBtn" class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-10 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                <i class="fa fa-play mr-2"></i> 开始
+            </button>
+        </div>
+        
+        <!-- 历史记录区域 -->
+        <div class="w-full max-w-2xl mt-10 bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4 flex items-center">
+                <i class="fa fa-history text-gray-500 mr-2"></i> 历史记录
+            </h3>
+            <div id="historyList" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[180px] overflow-y-auto pr-2">
+                <p class="col-span-full text-gray-500 text-center italic">暂无记录</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-6 px-4">
+        <div class="container mx-auto text-center">
+            <p>英才汇硕信息科技有限公司 &copy; 2025-2030</p>
+            <p class="text-gray-400 text-sm mt-1">随机点名系统</p>
+        </div>
+    </footer>
+
+    <script>
+        // 学生名单 - 可根据实际情况修改
+        const students = [
+            "赵佳佳", "牛鑫鑫", "郭磊", "潘芙蓉", "宋彦羽", "张依楠", "张怡佳", "张宇娟",
+            "刘怡佳", "李嘉淇", "张义杰", "陈慧娟", "郭雅淳", "刘海坤", "张轩", "胡豇",
+            "武增瑞"
+        ];
+        
+        // 获取DOM元素
+        const nameDisplay = document.getElementById('nameDisplay');
+        const studentName = document.getElementById('studentName');
+        const startBtn = document.getElementById('startBtn');
+        const statusText = document.getElementById('statusText');
+        const historyList = document.getElementById('historyList');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        
+        // 变量初始化
+        let isRolling = false;
+        let rollInterval;
+        let timerInterval;
+        let history = [];
+        const totalDuration = 5000; // 总时长5秒
+        let remainingTime = totalDuration;
+        
+        // 随机选择学生
+        function getRandomStudent() {
+            const randomIndex = Math.floor(Math.random() * students.length);
+            return students[randomIndex];
+        }
+        
+        // 开始滚动名字
+        function startRolling() {
+            if (isRolling) return;
+            
+            isRolling = true;
+            startBtn.disabled = true;
+            startBtn.classList.add('opacity-70', 'cursor-not-allowed');
+            statusText.textContent = "正在随机选择...将在5秒后自动停止";
+            
+            // 显示进度条
+            progressContainer.classList.remove('hidden');
+            remainingTime = totalDuration;
+            updateProgressBar();
+            
+            // 添加动画效果
+            nameDisplay.classList.add('border-accent');
+            studentName.classList.add('text-accent');
+            
+            // 快速切换名字
+            rollInterval = setInterval(() => {
+                studentName.textContent = getRandomStudent();
+            }, 80); // 加快滚动速度，让效果更明显
+            
+            // 倒计时器
+            timerInterval = setInterval(() => {
+                remainingTime -= 100;
+                updateProgressBar();
+                
+                if (remainingTime <= 0) {
+                    clearInterval(timerInterval);
+                    stopRolling();
+                }
+            }, 100);
+        }
+        
+        // 更新进度条
+        function updateProgressBar() {
+            const percentage = (remainingTime / totalDuration) * 100;
+            progressBar.style.width = `${percentage}%`;
+            
+            // 最后一秒改变颜色提醒
+            if (remainingTime <= 1000) {
+                progressBar.classList.add('bg-red-500');
+                progressBar.classList.remove('bg-primary');
+            } else {
+                progressBar.classList.remove('bg-red-500');
+                progressBar.classList.add('bg-primary');
+            }
+        }
+        
+        // 停止滚动并显示结果
+        function stopRolling() {
+            if (!isRolling) return;
+            
+            clearInterval(rollInterval);
+            isRolling = false;
+            startBtn.disabled = false;
+            startBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            
+            // 隐藏进度条
+            progressContainer.classList.add('hidden');
+            
+            // 移除动画效果，添加结果效果
+            nameDisplay.classList.remove('border-accent');
+            studentName.classList.remove('text-accent');
+            nameDisplay.classList.add('border-secondary');
+            studentName.classList.add('text-secondary');
+            
+            // 最终选择一个学生
+            const selected = getRandomStudent();
+            studentName.textContent = selected;
+            statusText.textContent = "已选择完成，可点击开始重新选择";
+            
+            // 添加到历史记录
+            addToHistory(selected);
+            
+            // 短暂的弹跳动画
+            studentName.classList.add('animate-bounce-slow');
+            setTimeout(() => {
+                studentName.classList.remove('animate-bounce-slow');
+                nameDisplay.classList.remove('border-secondary');
+                studentName.classList.remove('text-secondary');
+            }, 1000);
+        }
+        
+        // 添加到历史记录
+        function addToHistory(name) {
+            // 添加到历史数组
+            history.unshift({
+                name: name,
+                time: new Date()
+            });
+            
+            // 限制历史记录数量
+            if (history.length > 20) {
+                history.pop();
+            }
+            
+            // 更新历史记录显示
+            updateHistoryDisplay();
+        }
+        
+        // 更新历史记录显示
+        function updateHistoryDisplay() {
+            // 清空历史记录容器
+            historyList.innerHTML = '';
+            
+            // 如果没有历史记录
+            if (history.length === 0) {
+                historyList.innerHTML = '<p class="col-span-full text-gray-500 text-center italic">暂无记录</p>';
+                return;
+            }
+            
+            // 添加历史记录项
+            history.forEach((item, index) => {
+                const timeStr = item.time.toLocaleTimeString();
+                const historyItem = document.createElement('div');
+                historyItem.className = `bg-blue-50 rounded-lg p-2 text-center text-sm ${index === 0 ? 'ring-2 ring-secondary' : ''}`;
+                historyItem.innerHTML = `
+                    <p class="font-medium ${index === 0 ? 'text-secondary' : 'text-primary'}">${item.name}</p>
+                    <p class="text-gray-400 text-xs">${timeStr}</p>
+                `;
+                historyList.appendChild(historyItem);
+            });
+        }
+        
+        // 绑定按钮事件
+        startBtn.addEventListener('click', startRolling);
+        
+        // 初始化历史记录显示
+        updateHistoryDisplay();
+    </script>
 </body>
 </html>
+    
